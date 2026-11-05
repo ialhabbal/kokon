@@ -84,7 +84,7 @@ Upstream moves fast. Every platform follows the same release, so:
   Signed with the same updater key as Windows/Mac (`~/.tauri/kokon-updater.key`, also found under
   /mnt/c/Users/*/.tauri).
 - **g++-13** (ubuntu-toolchain-r PPA, `--setup` installs it; since 0.12): the ONNX Runtime that `ort`
-  downloads (AI watermark, fast stickers) needs GCC 13's libstdc++ and Ubuntu 22.04 has GCC 11's.
+  downloads for fast stickers needs GCC 13's libstdc++ and Ubuntu 22.04 has GCC 11's.
   `crates/qls-core/build.rs` links g++-13's `libstdc++.a` into kokon-service statically, so users need
   nothing new. The Docker image's build stage installs it too.
 - Quick run without packaging: `npm run build && cargo build -p kokon --release --features

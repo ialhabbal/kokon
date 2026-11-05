@@ -1,4 +1,4 @@
-import { CircleAlert, CirclePlay, FolderTree, Layers, Palette, ShieldCheck, Sparkles, WandSparkles } from "lucide-react";
+import { CircleAlert, CirclePlay, FolderTree, Layers, Palette, Sparkles, WandSparkles } from "lucide-react";
 import { useEffect, useState } from "react";
 import { api } from "../lib/api";
 import { formatBytes, installProgress, installStep, installTimeLeft, modelChoiceUi, modelOfferDue, whatsNewDue as due } from "../lib/logic";
@@ -32,11 +32,6 @@ const NEWS = [
     icon: WandSparkles,
     title: "Prompt+ for areas and Expand",
     text: "Prompt+ now writes the prompt for a brushed area too (it names what to remove) and for Expand (what the new borders show), for you to check before it runs.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "AI marking",
-    text: "Every image Kokon makes says in its file, and in an invisible watermark, that it was made with AI, as the EU AI Act asks. Settings → General → Check an image reads both.",
   },
   {
     icon: FolderTree,

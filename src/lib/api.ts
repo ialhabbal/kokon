@@ -94,18 +94,6 @@ export interface RemoteStatus {
 
 const json = (body: unknown) => JSON.stringify(body);
 
-/** The answer of "Check an image" (crates/qls-core/src/provenance.rs `check`). */
-export interface AiCheckReport {
-  ai: boolean;
-  metadata: { digital_source_type: string | null; ai: boolean; creator_tool: string | null; c2pa_manifest: boolean };
-  watermark: { checked: boolean; found?: boolean; kokon?: boolean; text?: string; schema?: string };
-  width: number;
-  height: number;
-  sha256: string;
-  checked_at: string;
-  checker: string;
-}
-
 export const api = {
   status: () => call<StatusResponse>("/status"),
   setup: () => call<SetupReport>("/setup"),
@@ -191,9 +179,6 @@ export const api = {
   cancel: (id: string) => call<JobView>(`/jobs/${id}/cancel`, { method: "POST" }),
   upload: (bytes: Blob | ArrayBuffer | Uint8Array, name?: string, signal?: AbortSignal) =>
     call<InputRecord>(`/inputs${privateQuery()}`, { method: "POST", body: bytes as BodyInit, signal, headers: { "Content-Type": "application/octet-stream", ...(name ? { "x-filename": encodeURIComponent(name) } : {}) } }),
-  /** What an image's AI markings say (metadata and Kokon's invisible watermark); nothing is kept. */
-  checkImage: (bytes: Blob | ArrayBuffer | Uint8Array) =>
-    call<AiCheckReport>("/provenance/check", { method: "POST", body: bytes as BodyInit, headers: { "Content-Type": "application/octet-stream" } }),
   importPath: (path: string) => call<InputRecord>(`/inputs/import${privateQuery()}`, { method: "POST", body: json({ path }) }),
   clearPrivate: () => call<{ cleared: number }>("/private/clear", { method: "POST" }),
   input: (id: string) => call<InputRecord>(`/inputs/${id}`),

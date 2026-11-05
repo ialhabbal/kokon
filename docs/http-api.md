@@ -95,7 +95,6 @@ about what is in the image or what changes.
 | GET | `/inputs/{id}` | The stored input's record |
 | GET | `/inputs/{id}/image`, `/inputs/{id}/thumb` | The image, or its thumbnail |
 | GET | `/inputs/{id}/preview` | A screen-sized copy (at most 1280 px on the long side, JPEG; PNG if it has transparency), made on first request |
-| POST | `/provenance/check` | What an image's AI markings say: raw image bytes as the body (up to 210 MB), nothing stored. Answers `ai`, `metadata` (`digital_source_type`, `creator_tool`, `c2pa_manifest`), `watermark` (`checked`, `found`, `kokon`, `text`), `sha256`, `checked_at`; see [ai-marking.md](ai-marking.md) |
 | POST | `/image-info` | Size, aspect, type and embedded generation metadata of an image |
 | POST | `/private/clear` | End private mode: delete every private input and result |
 

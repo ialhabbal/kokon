@@ -1,7 +1,4 @@
-//! The process's one ONNX Runtime environment. `ort` allows a single environment per process: the
-//! fast stickers (matting.rs) and the AI watermark (watermark/) each built their own, so whichever
-//! ran second failed ("only one environment is allowed per process"; seen on the Mac 2026-11-04: a
-//! sticker first, then every result unwatermarked). Both take it from here.
+//! The process's one ONNX Runtime environment, shared by ONNX-backed features.
 
 use std::path::Path;
 use std::sync::OnceLock;

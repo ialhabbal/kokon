@@ -33,3 +33,4 @@ __pycache__/
 /engine-mac/.swiftpm
 # Layers lab: MobileSAM ONNX files served by the vite dev server (not committed)
 /lab-models/
+/run-kokon.bat

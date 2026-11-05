@@ -1,6 +1,6 @@
 # Status
 
-**Updated 2026-11-04.** What is in progress, what comes next, and where help is welcome. Kept current at the end
+**Updated 2026-11-05.** What is in progress, what comes next, and where help is welcome. Kept current at the end
 of every task (see [AGENTS.md](../AGENTS.md#keeping-docsstatusmd-current)); GitHub is the source of truth.
 
 ## Current version: [0.12.0](https://github.com/GabrieleLozupone/kokon/releases/tag/v0.12.0) (2026-11-04)
@@ -55,8 +55,8 @@ Windows, macOS (Apple Silicon, 15+) and Linux (`.deb`, `.rpm`). Installed copies
   and one-click Select (its model downloaded on first use), Prompt+ for brushed areas and Expand with a Detail level,
   Kokon's Mac engine on by default on Macs with 16 GB+ and faster on the M5 (@CesareDavidePace,
   [#49](https://github.com/GabrieleLozupone/kokon/pull/49), [#50](https://github.com/GabrieleLozupone/kokon/pull/50)),
-  AI marking (IPTC metadata + invisible watermark, Check an image; [ai-marking.md](ai-marking.md)), a project list
-  by day and multi-version Delete, video guides in a Help menu.
+  a project list by day and multi-version Delete, video guides in a Help menu.
+- AI marking and image checking have been removed from the current development build pending a rebuild.
 - **0.11.2** (2026-10-28): Mac engine 0.1.1 (on macOS 26 the matrix unit and the Neural Engine work beside the GPU,
   found by @CesareDavidePace in [#46](https://github.com/GabrieleLozupone/kokon/pull/46); on M3, M4 and M5 Macs 8–18 %
   faster steps), the progress card keeps its place when you come back to it, Settings ask before closing with unsaved

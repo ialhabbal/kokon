@@ -13,7 +13,7 @@ import { activeLoras, buildRequest, composing, emptyComposer, goneVersions, isGe
 import { keepLabsIn, labsChanged, labSources, loadLab, type LabStore } from "./layerDoc";
 import type { AppErrorBody, GenerationRecord, GenerationRequest, InputRecord, JobView, LoraItem, MacBenchState, ServerState, StatusResponse } from "./types";
 
-export type Overlay = null | "gallery" | "settings" | "inpaint" | "expand" | "layers" | "welcome" | "whats-new" | "prompt-tips" | "shortcuts" | "ai-check";
+export type Overlay = null | "gallery" | "settings" | "inpaint" | "expand" | "layers" | "welcome" | "whats-new" | "prompt-tips" | "shortcuts";
 
 export interface SessionItem {
   key: string;

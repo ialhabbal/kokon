@@ -19,7 +19,7 @@ import { dilate, erode, fileSafe } from "../lib/layers";
 import { centre, copiedShare, stoppedScenes, CROP_MAX_RATIO, cropFor, docId, extOf, unionRect, type Rect, waitingMarks, shadowAlpha, strengthPixels, mapBox, reorder, unmapPoint, withGroup, xfOf, type Box, type DocLayer, type Effect, type Feed, type LayerDoc, type SceneEdit, type Sticker, type Xf } from "../lib/layerDoc";
 import { buildRequest, cutoutText, downloadIsFor, jobStepText, refFromInput, type CutStep } from "../lib/logic";
 import { native } from "../lib/native";
-import { aiMarkingXmp, writePsd } from "../lib/psd";
+import { writePsd } from "../lib/psd";
 import { MARK_COLOURS, marksPrompt, type MarkColour } from "../lib/sceneEdit";
 import { placesOf } from "./LabScene";
 import { shortcut } from "../lib/platform";
@@ -1799,9 +1799,8 @@ export function LayerDoc({ projectId, doc, onChange, onNewSplit }: { projectId: 
       fx.fillStyle = "#fff";
       fx.fillRect(0, 0, W, H);
       fx.drawImage(await render(W, H), 0, 0);
-      const xmp = aiMarkingXmp(getState().status?.service.version ?? "");
       setWorking("Writing the PSD · choose where to save it");
-      const path = await native.savePsd(writePsd(W, H, layers, fx.getImageData(0, 0, W, H).data, xmp));
+      const path = await native.savePsd(writePsd(W, H, layers, fx.getImageData(0, 0, W, H).data));
       if (path) toastInfo(`Saved ${path.split(/[\\/]/).pop()}: each layer is its own layer in Photoshop.`);
     } catch (e) {
       toastError(e);

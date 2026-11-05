@@ -20,7 +20,7 @@ if [ "${1:-}" = "--setup" ]; then
   sudo apt-get update
   sudo apt-get install -y build-essential curl wget file pkg-config libssl-dev libgtk-3-dev \
     libwebkit2gtk-4.1-dev libayatana-appindicator3-dev librsvg2-dev libxdo-dev patchelf
-  # g++-13: ONNX Runtime (AI watermark, stickers) needs GCC 13's libstdc++, linked into kokon-service
+  # g++-13: ONNX Runtime (fast stickers) needs GCC 13's libstdc++, linked into kokon-service
   # statically (crates/qls-core/build.rs); Ubuntu 22.04 has GCC 11.
   if ! command -v g++-13 >/dev/null; then
     sudo apt-get install -y software-properties-common

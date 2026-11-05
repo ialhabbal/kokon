@@ -21,7 +21,7 @@ Using a coding agent? Start from [AGENTS.md](AGENTS.md) and [docs/STATUS.md](doc
 
 ```powershell
 npm install
-npx tauri dev                     # run the desktop app in development
+npx tauri dev                     # run the desktop app in development; model setup happens in the app
 powershell -ExecutionPolicy Bypass -File scripts\build-release.ps1   # installer
 ```
 

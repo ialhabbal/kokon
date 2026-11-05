@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { aiMarkingXmp, packBits, writePsd } from "./psd";
+import { packBits, writePsd } from "./psd";
 
 function unpack(p: ArrayLike<number>, at: number, len: number): number[] {
   const out: number[] = [];
@@ -139,6 +139,7 @@ describe("psd", () => {
     const flat = rgba((x) => [x, x, x, 255]);
     const out = readPsd(writePsd(W, H, [{ name: "Cup ☕", hidden: true, rgba: cup }, { name: "Nothing", hidden: false, rgba: empty }, { name: "Background", hidden: false, rgba: bg }], flat));
     expect([out.width, out.height, out.channels]).toEqual([W, H, 3]);
+    expect(out.resources.size).toBe(0);
     expect(out.recs.map((r) => r.name)).toEqual(["Background", "Nothing", "Cup ☕"]);
     expect(out.recs[2].short).toBe("Cup _");
     expect(out.recs.map((r) => r.hidden)).toEqual([false, false, true]);
@@ -152,19 +153,4 @@ describe("psd", () => {
     expect(out.flat.slice(0, W)).toEqual([0, 1, 2, 3, 4, 5]);
   });
 
-  it("carries the AI marking as XMP (resource 1060) and still reads back", () => {
-    const px = new Uint8ClampedArray([1, 2, 3, 255, 4, 5, 6, 255, 7, 8, 9, 255]);
-    const x = aiMarkingXmp("0.12.0", new Date(2026, 10, 4, 9, 5, 7));
-    expect(x).toContain('Iptc4xmpExt:DigitalSourceType="http://cv.iptc.org/newscodes/digitalsourcetype/compositeWithTrainedAlgorithmicMedia"');
-    expect(x).toContain('xmp:CreatorTool="Kokon 0.12.0"');
-    expect(x).toMatch(/xmp:CreateDate="2026-11-04T09:05:07[+-]\d\d:\d\d"/);
-    expect(aiMarkingXmp('a"<b')).toContain('Kokon a&quot;&lt;b"');
-    // Odd and even packet lengths both keep the sections aligned.
-    for (const packet of [x, x + " "]) {
-      const out = readPsd(writePsd(3, 1, [{ name: "L", hidden: false, rgba: px }], px, packet));
-      expect(new TextDecoder().decode(out.resources.get(1060))).toBe(packet);
-      expect(out.flat.slice(0, 3)).toEqual([1, 4, 7]);
-    }
-    expect(readPsd(writePsd(3, 1, [], px)).resources.size).toBe(0);
-  });
 });

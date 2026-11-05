@@ -142,7 +142,6 @@ pub fn router(state: Arc<AppState>, lan: bool) -> Router {
         .layer(DefaultBodyLimit::max(4 * 1024 * 1024));
     let uploads = Router::new()
         .route("/inputs", post(upload_input))
-        .route("/provenance/check", post(check_provenance))
         .layer(DefaultBodyLimit::max(210 * 1024 * 1024));
     Router::new()
         .route("/api/v1/ping", get(ping))
@@ -287,7 +286,6 @@ async fn setup(State(s): St) -> ApiResult<Json<Value>> {
     let e = s.engine.clone();
     let _ = tokio::task::spawn_blocking(move || {
         e.place_bundled_upscaler();
-        e.place_bundled_watermark();
     })
     .await;
     let cfg = s.engine.config();
@@ -453,7 +451,6 @@ async fn install_start(State(s): St, Json(b): Json<InstallBody>) -> ApiResult<Js
     let e = s.engine.clone();
     let _ = tokio::task::spawn_blocking(move || {
         e.place_bundled_upscaler();
-        e.place_bundled_watermark();
     })
     .await;
     let label = if user { format!("user:{}", preset.id) } else { preset.id.to_string() };
@@ -1028,14 +1025,6 @@ async fn events(State(s): St, Extension(caller): Extension<Caller>) -> Sse<impl 
 struct PrivateQ {
     #[serde(default)]
     private: bool,
-}
-
-/// "Check an image": what its AI markings say (provenance::check). The image is read in memory
-/// and never stored (the Code of Practice's zero retention for detection).
-async fn check_provenance(State(s): St, body: Bytes) -> ApiResult<Json<Value>> {
-    let dir = s.engine.config().sdcpp_dir;
-    let report = tokio::task::spawn_blocking(move || qls_core::provenance::check(&dir, &body)).await.map_err(AppError::internal)??;
-    Ok(Json(report))
 }
 
 async fn upload_input(State(s): St, Query(q): Query<PrivateQ>, headers: HeaderMap, body: Bytes) -> ApiResult<Json<Value>> {

@@ -1,4 +1,4 @@
-// Linking the ONNX Runtime that `ort` downloads (AI watermark, fast stickers) into release builds.
+// Linking the ONNX Runtime that `ort` downloads for fast stickers into release builds.
 //
 // macOS: its CoreML code calls `___isPlatformVersionAtLeast` (Objective-C `@available`), which lives in
 // clang's runtime library. The release build (thin LTO) did not get it and every binary with qls-core

@@ -2,7 +2,6 @@ import { Activity, Copy, Cpu, Download, FolderOpen, HardDrive, Heart, Layers, Mo
 import { useEffect, useRef, useState } from "react";
 import { writeText } from "@tauri-apps/plugin-clipboard-manager";
 import { api } from "../lib/api";
-import { AiMarkingCard } from "./AiCheck";
 import { native } from "../lib/native";
 import { inBrowser } from "../lib/platform";
 import { getState, openModelSetup, refreshStatus, setState, startTour, toastError, toastInfo, useStore } from "../lib/store";
@@ -440,7 +439,6 @@ export function Settings() {
             <>
               <RepoCard />
               <SupportCard />
-              <AiMarkingCard />
               <PathField label="Save images to" value={cfg.outputDir} folder open onChange={(v) => set({ outputDir: v })} />
               <div className="field">
                 <span>Appearance</span>

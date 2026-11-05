@@ -1,6 +1,6 @@
 //! The C23 number parsers glibc 2.38 added, for glibc 2.35 (Ubuntu 22.04, which the .deb, .rpm and
-//! Docker image are built on and run on). The ONNX Runtime `ort` downloads for Linux (AI watermark,
-//! fast stickers) was compiled against glibc 2.38+, where `strtol` and friends become
+//! Docker image are built on and run on). The ONNX Runtime `ort` download for Linux (fast stickers)
+//! was compiled against glibc 2.38+, where `strtol` and friends become
 //! `__isoc23_strtol` etc.: linking it on 22.04 failed with exactly these three undefined (0.12.0,
 //! 2026-11-04). They differ from the classic ones only in also reading a "0b" prefix with base 0 or 2,
 //! which ONNX Runtime does not use (it parses its own model and config numbers); on newer glibc these

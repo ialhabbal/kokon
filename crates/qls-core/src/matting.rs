@@ -374,23 +374,18 @@ mod real_model {
 
 #[cfg(test)]
 mod shared_runtime_tests {
-    /// With the real models (KOKON_TEST_SDCPP: a folder holding models/matting/birefnet_lite.onnx and
-    /// models/watermark/*.onnx): a result is watermarked, then a fast sticker is matted, in one
-    /// process. Before crate::onnx, the second to start failed ("only one environment is allowed
-    /// per process"): every quick cut-out after a result (Windows), no watermark after a sticker (Mac).
+    /// With the real model (KOKON_TEST_SDCPP: a folder holding models/matting/birefnet_lite.onnx),
+    /// runs the matte twice through the shared ONNX Runtime environment.
     #[test]
-    fn watermark_then_sticker_in_one_process() {
+    fn sticker_reuses_the_shared_onnx_runtime() {
         let Ok(dir) = std::env::var("KOKON_TEST_SDCPP") else { return };
         let dir = std::path::PathBuf::from(dir);
         let img = image::RgbaImage::from_fn(400, 300, |x, y| image::Rgba([(x / 2) as u8, (y / 2) as u8, if (150..250).contains(&x) { 230 } else { 40 }, 255]));
-        let marked = crate::watermark::embed(&dir, &img).unwrap().unwrap();
-        // On the CPU the first matte (session included) takes ~8 s on an M2 Pro; on the Neural
-        // Engine (ort's default device policy, crate::onnx::cpu_session) it never came back.
         let started = std::time::Instant::now();
-        let m = super::matte(&dir, &marked, None).unwrap();
+        let m = super::matte(&dir, &img, None).unwrap();
         assert!(started.elapsed().as_secs() < 90, "first matte took {:?}", started.elapsed());
         assert_eq!(m.dimensions(), (400, 300));
-        assert!(crate::watermark::detect(&dir, &marked).unwrap().unwrap().kokon);
+        assert_eq!(super::matte(&dir, &img, None).unwrap().dimensions(), (400, 300));
     }
 
     /// Stop ends the model's run in the service: before it starts (stopped while uploading) at

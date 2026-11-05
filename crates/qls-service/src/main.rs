@@ -297,7 +297,6 @@ async fn run(args: Vec<String>) {
     let e = engine.clone();
     let _ = tokio::task::spawn_blocking(move || {
         e.place_bundled_upscaler();
-        e.place_bundled_watermark();
     })
     .await;
     // The original VAE or Q4_K model left behind when a busy server held it open during the update.
