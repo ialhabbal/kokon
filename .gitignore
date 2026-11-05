@@ -34,3 +34,4 @@ __pycache__/
 # Layers lab: MobileSAM ONNX files served by the vite dev server (not committed)
 /lab-models/
 /run-kokon.bat
+/update-from-upstream.bat
